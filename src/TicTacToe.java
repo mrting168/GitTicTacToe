@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.Random;
 /**
  * Tic-Tac-Toe: Two-player console, non-graphics, non-OO version.
  * All variables/methods are declared as static (belong to the class)
@@ -24,6 +25,7 @@ public class TicTacToe {
     // (PLAYING, DRAW, CROSS_WON, NOUGHT_WON)
     public static int currentPlayer; // the current player (CROSS or NOUGHT)
     public static int currntRow, currentCol; // current seed's row and column
+    public static int turnCounter=0;
 
     public static Scanner in = new Scanner(System.in); // the input Scanner
 
@@ -59,21 +61,39 @@ public class TicTacToe {
         currentState = PLAYING; // ready to play
         currentPlayer = CROSS;  // cross plays first
     }
-
+    public static int playerOneMove(){
+        int move=0, row=0, col=0;
+        Random rand= new Random();
+        row= rand.nextInt(3);
+        col= rand.nextInt(3);
+        move=row*10+col;
+        return move;
+    }
+    public static int playerTwoMove(){
+        int move=0, row=0, col=0;
+        Random rand= new Random();
+        row= rand.nextInt(2);
+        col= rand.nextInt(2);
+        move=row*10+ col;
+        return move;
+    }
     /** Player with the "theSeed" makes one move, with input validation.
      Update global variables "currentRow" and "currentCol". */
     public static void playerMove(int theSeed) {
         boolean validInput = false;  // for input validation
+        int move=0, row, col;
         do {
             if (theSeed == CROSS) {
-                System.out.print("Player 'X', enter your move (row[1-3] column[1-3]): ");
+                System.out.print("Player 'X', enter your move (row[1-3] column[1-3]): \n");
             } else {
-                System.out.print("Player 'O', enter your move (row[1-3] column[1-3]): ");
+                System.out.print("Player 'O', enter your move (row[1-3] column[1-3]): \n");
             }
-            if()
-                playerOneMove();
+            if(turnCounter%2==0)
+                move=playerOneMove();
             else
-                playerTwoMove();
+                move=playerTwoMove();
+            row=move/10;
+            col=move%10;
             //int row = in.nextInt() - 1;  // array index starts at 0 instead of 1
             //int col = in.nextInt() - 1;
             if (row >= 0 && row < ROWS && col >= 0 && col < COLS && board[row][col] == EMPTY) {
